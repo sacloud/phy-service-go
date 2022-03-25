@@ -14,5 +14,21 @@
 
 package service
 
-// Version バージョン
-const Version = "v0.0.1-dev"
+import (
+	"context"
+
+	"github.com/sacloud/phy-api-go"
+	v1 "github.com/sacloud/phy-api-go/apis/v1"
+)
+
+func (s *Service) Read(req *ReadRequest) (*v1.Service, error) {
+	return s.ReadWithContext(context.Background(), req)
+}
+
+func (s *Service) ReadWithContext(ctx context.Context, req *ReadRequest) (*v1.Service, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+	client := phy.NewServiceOp(s.client)
+	return client.Read(ctx, v1.ServiceId(req.Id))
+}

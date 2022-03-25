@@ -14,5 +14,27 @@
 
 package service
 
-// Version バージョン
-const Version = "v0.0.1-dev"
+import (
+	"fmt"
+	"runtime"
+
+	client "github.com/sacloud/api-client-go"
+	"github.com/sacloud/phy-api-go"
+)
+
+// UserAgent APIリクエスト時のユーザーエージェント
+var UserAgent = fmt.Sprintf(
+	"phy-service-go/%s (%s/%s; +https://github.com/sacloud/phy-service-go) %s",
+	Version,
+	runtime.GOOS,
+	runtime.GOARCH,
+	phy.UserAgent,
+)
+
+func NewClient() *phy.Client {
+	return &phy.Client{
+		Options: &client.Options{
+			UserAgent: UserAgent,
+		},
+	}
+}

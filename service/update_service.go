@@ -14,5 +14,25 @@
 
 package service
 
-// Version バージョン
-const Version = "v0.0.1-dev"
+import (
+	"context"
+
+	"github.com/sacloud/phy-api-go"
+	v1 "github.com/sacloud/phy-api-go/apis/v1"
+)
+
+func (s *Service) Update(req *UpdateRequest) (*v1.Service, error) {
+	return s.UpdateWithContext(context.Background(), req)
+}
+
+func (s *Service) UpdateWithContext(ctx context.Context, req *UpdateRequest) (*v1.Service, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+	client := phy.NewServiceOp(s.client)
+	current, err := client.Read(ctx, v1.ServiceId(req.Id))
+	if err != nil {
+		return nil, err
+	}
+	return client.Update(ctx, v1.ServiceId(req.Id), req.ToRequestParameter(current))
+}

@@ -14,5 +14,14 @@
 
 package service
 
-// Version バージョン
-const Version = "v0.0.1-dev"
+import "github.com/sacloud/phy-api-go"
+
+// Service provides a high-level API of for Service
+type Service struct {
+	client *phy.Client
+}
+
+// New returns new service instance of Service
+func New(client *phy.Client) *Service {
+	return &Service{client: client}
+}

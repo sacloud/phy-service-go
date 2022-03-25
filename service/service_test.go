@@ -1,0 +1,100 @@
+// Copyright 2022 The sacloud/object-storage-service-go Authors
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+package service
+
+import (
+	"net/http/httptest"
+	"testing"
+
+	client "github.com/sacloud/api-client-go"
+	"github.com/sacloud/packages-go/pointer"
+	"github.com/sacloud/phy-api-go"
+	v1 "github.com/sacloud/phy-api-go/apis/v1"
+	"github.com/sacloud/phy-api-go/fake"
+	"github.com/sacloud/phy-api-go/fake/server"
+	service "github.com/sacloud/phy-service-go"
+	"github.com/stretchr/testify/require"
+)
+
+var serviceId = "100000000001"
+
+func TestAccount_CRUD_plus_L(t *testing.T) {
+	server := initFakeServer()
+	client := &phy.Client{
+		APIRootURL: server.URL,
+		Options: &client.Options{
+			UserAgent: service.UserAgent,
+		},
+	}
+	svc := New(client)
+	var data *v1.Service
+
+	t.Run("read", func(t *testing.T) {
+		read, err := svc.Read(&ReadRequest{
+			Id: serviceId,
+		})
+		require.NoError(t, err)
+		require.NotNil(t, read)
+
+		data = read
+	})
+
+	t.Run("read return NotFoundError when account is not found", func(t *testing.T) {
+		id := "not-exists-account-id"
+		read, err := svc.Read(&ReadRequest{
+			Id: id,
+		})
+		require.Nil(t, read)
+		require.Error(t, err)
+		require.True(t, v1.IsError404(err))
+	})
+
+	t.Run("list", func(t *testing.T) {
+		found, err := svc.Find(&FindRequest{})
+		require.NoError(t, err)
+		require.Len(t, found, 1)
+
+		require.Equal(t, data, found[0])
+	})
+
+	t.Run("update", func(t *testing.T) {
+		updated, err := svc.Update(&UpdateRequest{
+			Id:          serviceId,
+			Description: nil,
+			Nickname:    pointer.NewString("server01-updated"),
+		})
+
+		require.NoError(t, err)
+		require.NotNil(t, updated)
+		require.Equal(t, serviceId, updated.ServiceId)
+		require.Equal(t, "description", *updated.Description)
+		require.Equal(t, "server01-updated", updated.Nickname)
+	})
+}
+
+func initFakeServer() *httptest.Server {
+	fakeServer := &server.Server{
+		Engine: &fake.Engine{
+			Services: []*v1.Service{
+				{
+					Nickname:    "server01",
+					Description: pointer.NewString("description"),
+					ServiceId:   serviceId,
+				},
+			},
+		},
+	}
+	return httptest.NewServer(fakeServer.Handler())
+}

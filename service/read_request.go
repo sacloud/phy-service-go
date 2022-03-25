@@ -14,5 +14,14 @@
 
 package service
 
-// Version バージョン
-const Version = "v0.0.1-dev"
+import (
+	"github.com/sacloud/packages-go/validate"
+)
+
+type ReadRequest struct {
+	Id string `service:"-" validate:"required"`
+}
+
+func (req *ReadRequest) Validate() error {
+	return validate.New().Struct(req)
+}
