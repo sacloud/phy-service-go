@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package service
+package dedicatedsubnet
 
 import (
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	client "github.com/sacloud/api-client-go"
-	"github.com/sacloud/packages-go/pointer"
 	"github.com/sacloud/phy-api-go"
 	v1 "github.com/sacloud/phy-api-go/apis/v1"
 	"github.com/sacloud/phy-api-go/fake"
@@ -28,7 +28,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-var serviceId = "100000000001"
+var dedicatedSubnetId = "100000000001"
 
 func TestAccount_CRUD_plus_L(t *testing.T) {
 	fakeServer := initFakeServer()
@@ -39,11 +39,11 @@ func TestAccount_CRUD_plus_L(t *testing.T) {
 		},
 	}
 	svc := New(apiClient)
-	var data *v1.Service
+	var data *v1.DedicatedSubnet
 
 	t.Run("read", func(t *testing.T) {
 		read, err := svc.Read(&ReadRequest{
-			Id: serviceId,
+			Id: dedicatedSubnetId,
 		})
 		require.NoError(t, err)
 		require.NotNil(t, read)
@@ -68,30 +68,35 @@ func TestAccount_CRUD_plus_L(t *testing.T) {
 
 		require.Equal(t, data, found[0])
 	})
-
-	t.Run("update", func(t *testing.T) {
-		updated, err := svc.Update(&UpdateRequest{
-			Id:          serviceId,
-			Description: nil,
-			Nickname:    pointer.NewString("server01-updated"),
-		})
-
-		require.NoError(t, err)
-		require.NotNil(t, updated)
-		require.Equal(t, serviceId, updated.ServiceId)
-		require.Equal(t, "description", *updated.Description)
-		require.Equal(t, "server01-updated", updated.Nickname)
-	})
 }
 
 func initFakeServer() *httptest.Server {
 	fakeServer := &server.Server{
 		Engine: &fake.Engine{
-			Services: []*v1.Service{
+			DedicatedSubnets: []*v1.DedicatedSubnet{
 				{
-					Nickname:    "server01",
-					Description: pointer.NewString("description"),
-					ServiceId:   serviceId,
+					ConfigStatus:      v1.DedicatedSubnetConfigStatusOperational,
+					DedicatedSubnetId: dedicatedSubnetId,
+					Firewall:          nil,
+					Ipv4: v1.Ipv4{
+						BroadcastAddress:    "192.0.2.239",
+						GatewayAddress:      "192.0.2.225",
+						NetworkAddress:      "192.0.2.224",
+						PrefixLength:        28,
+						SpecialUseAddresses: nil,
+					},
+					LoadBalancer: nil,
+					ServerCount:  1,
+					Service: v1.ServiceQuiet{
+						Activated: time.Now(),
+						Nickname:  "global-network01",
+						ServiceId: "100000000001",
+						Tags:      nil,
+					},
+					Zone: v1.Zone{
+						Region: "is",
+						ZoneId: 302,
+					},
 				},
 			},
 		},
