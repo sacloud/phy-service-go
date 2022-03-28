@@ -20,8 +20,6 @@ import (
 
 type ReadRequest struct {
 	Id string `service:"-" validate:"required"`
-	// IPv6有効状態の最新状態を取得する(デフォルト:true)
-	Refresh *bool
 }
 
 func (req *ReadRequest) Validate() error {
