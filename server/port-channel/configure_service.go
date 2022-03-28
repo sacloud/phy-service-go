@@ -16,6 +16,7 @@ package portchannel
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/sacloud/phy-api-go"
 	v1 "github.com/sacloud/phy-api-go/apis/v1"
@@ -24,17 +25,46 @@ import (
 // Configure ポートチャネル ボンディング設定
 //
 // 既存の設定が存在する場合に実行すると上書き動作(初期化)となる
-func (s *Service) Configure(req *ConfigureRequest) (*v1.PortChannel, error) {
+func (s *Service) Configure(req *ConfigureRequest) (*ConfiguredPortChannel, error) {
 	return s.ConfigureWithContext(context.Background(), req)
 }
 
 // ConfigureWithContext ポートチャネル ボンディング設定
 //
 // 既存の設定が存在する場合に実行すると上書き動作(初期化)となる
-func (s *Service) ConfigureWithContext(ctx context.Context, req *ConfigureRequest) (*v1.PortChannel, error) {
+func (s *Service) ConfigureWithContext(ctx context.Context, req *ConfigureRequest) (*ConfiguredPortChannel, error) {
 	if err := req.Validate(); err != nil {
 		return nil, err
 	}
 	client := phy.NewServerOp(s.client)
-	return client.ConfigureBonding(ctx, v1.ServerId(req.ServerId), v1.PortChannelId(req.Id), req.ToRequestParameter())
+	portChannel, err := client.ConfigureBonding(ctx,
+		v1.ServerId(req.ServerId), v1.PortChannelId(req.Id),
+		req.ConfigureBondingParameter(),
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	configured := &ConfiguredPortChannel{
+		PortChannel: *portChannel,
+	}
+
+	if len(portChannel.Ports) != len(req.PortSettings) {
+		return configured, fmt.Errorf("invalid port settings: %#+v", req.PortSettings)
+	}
+
+	for i := range portChannel.Ports {
+		portId := configured.Ports[i]
+		setting := req.PortSettings[i]
+
+		assigned, err := client.AssignNetwork(ctx,
+			v1.ServerId(req.ServerId), v1.PortId(portId),
+			setting.Network.ToRequestParameter(),
+		)
+		if err != nil {
+			return configured, err
+		}
+		configured.ConfiguredPorts = append(configured.ConfiguredPorts, assigned)
+	}
+	return configured, nil
 }

@@ -25,6 +25,7 @@ import (
 	"github.com/sacloud/phy-api-go/fake"
 	"github.com/sacloud/phy-api-go/fake/server"
 	service "github.com/sacloud/phy-service-go"
+	serverService "github.com/sacloud/phy-service-go/server"
 	"github.com/stretchr/testify/require"
 )
 
@@ -69,11 +70,21 @@ func TestServerPortChannel_CRUD_plus_L(t *testing.T) {
 			Id:          portChannelId,
 			ServerId:    serverId,
 			BondingType: "lacp",
+			PortSettings: []*PortSetting{
+				{
+					Nickname: "bond01",
+					Network: serverService.NetworkSetting{
+						Mode:         "access",
+						InternetType: "common_subnet",
+					},
+				},
+			},
 		})
 
 		require.NoError(t, err)
 		require.NotEqualValues(t, portChannel.Ports, updated.Ports)
 		require.Equal(t, v1.BondingType("lacp"), updated.BondingType)
+		require.NotEmpty(t, updated.ConfiguredPorts)
 	})
 }
 

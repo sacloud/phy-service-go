@@ -17,6 +17,7 @@ package portchannel
 import (
 	"github.com/sacloud/packages-go/validate"
 	v1 "github.com/sacloud/phy-api-go/apis/v1"
+	"github.com/sacloud/phy-service-go/server"
 )
 
 type ConfigureRequest struct {
@@ -30,21 +31,28 @@ type ConfigureRequest struct {
 	// * single - ボンディングなし(単体構成)
 	BondingType string `validate:"required,oneof=lacp static single"`
 
-	// 作成するポート名称の指定
-	//
-	// * nil: 自動設定
-	// * 1要素: ボンディング構成
-	// * 2要素: ボンディングなし
-	PortNicknames *[]string `validate:"omitempty,min=1,max=2,dive,required,max=50"`
+	// ポート設定
+	PortSettings []*PortSetting `validate:"required,min=1,max=2,dive"`
+}
+
+type PortSetting struct {
+	// ポート名
+	Nickname string `validate:"required,max=50"`
+	// 接続するネットワークの設定
+	Network server.NetworkSetting
 }
 
 func (req *ConfigureRequest) Validate() error {
 	return validate.New().Struct(req)
 }
 
-func (req *ConfigureRequest) ToRequestParameter() v1.ConfigureBondingParameter {
+func (req *ConfigureRequest) ConfigureBondingParameter() v1.ConfigureBondingParameter {
+	var names []string
+	for _, s := range req.PortSettings {
+		names = append(names, s.Nickname)
+	}
 	return v1.ConfigureBondingParameter{
 		BondingType:   v1.BondingType(req.BondingType),
-		PortNicknames: req.PortNicknames,
+		PortNicknames: &names,
 	}
 }
