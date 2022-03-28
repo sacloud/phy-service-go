@@ -12,39 +12,42 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package portchannel
+package port
 
 import (
+	"time"
+
 	"github.com/sacloud/packages-go/validate"
 	v1 "github.com/sacloud/phy-api-go/apis/v1"
 )
 
-type ConfigureRequest struct {
+type TrafficGraphRequest struct {
 	Id       int    `service:"-" validate:"required"`
 	ServerId string `service:"-" validate:"required"`
 
-	// ボンディング方式指定
-	//
-	// * lacp - LACP
-	// * static - static link aggregation
-	// * single - ボンディングなし(単体構成)
-	BondingType string `validate:"required,oneof=lacp static single"`
-
-	// 作成するポート名称の指定
-	//
-	// * nil: 自動設定
-	// * 1要素: ボンディング構成
-	// * 2要素: ボンディングなし
-	PortNicknames *[]string `validate:"omitempty,min=1,max=2,dive,required,max=50"`
+	// 取得範囲始点(過去31日前まで,未指定時は7日前)
+	Since time.Time `validate:"omitempty"`
+	// 取得範囲終点(未指定時は現在時刻)
+	Until time.Time `validate:"omitempty"`
+	// データポイント間隔(秒)
+	Step int `validate:"omitempty,oneof=300 600 3600 21600"`
 }
 
-func (req *ConfigureRequest) Validate() error {
+func (req *TrafficGraphRequest) Validate() error {
 	return validate.New().Struct(req)
 }
 
-func (req *ConfigureRequest) ToRequestParameter() v1.ConfigureBondingParameter {
-	return v1.ConfigureBondingParameter{
-		BondingType:   v1.BondingType(req.BondingType),
-		PortNicknames: req.PortNicknames,
+func (req *TrafficGraphRequest) ToRequestParameter() v1.ReadServerTrafficByPortParams {
+	params := v1.ReadServerTrafficByPortParams{}
+	if !req.Since.IsZero() {
+		params.Since = &req.Since
 	}
+	if !req.Until.IsZero() {
+		params.Until = &req.Until
+	}
+	if req.Step > 0 {
+		v := v1.ReadServerTrafficByPortParamsStep(req.Step)
+		params.Step = &v
+	}
+	return params
 }
