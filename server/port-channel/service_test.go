@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package server
+package portchannel
 
 import (
 	"net/http/httptest"
@@ -29,8 +29,9 @@ import (
 )
 
 var serverId = "100000000001"
+var portChannelId = 1001
 
-func TestServer_CRUD_plus_L(t *testing.T) {
+func TestServerPortChannel_CRUD_plus_L(t *testing.T) {
 	fakeServer := initFakeServer()
 	apiClient := &phy.Client{
 		APIRootURL: fakeServer.URL,
@@ -39,81 +40,40 @@ func TestServer_CRUD_plus_L(t *testing.T) {
 		},
 	}
 	svc := New(apiClient)
-	var data *Server
-	var dataWithAdditionalFields *Server
+	var portChannel *v1.PortChannel
 
-	t.Run("read without additional fields", func(t *testing.T) {
+	t.Run("read", func(t *testing.T) {
 		read, err := svc.Read(&ReadRequest{
-			Id: serverId,
+			Id:       portChannelId,
+			ServerId: serverId,
 		})
 		require.NoError(t, err)
 		require.NotNil(t, read)
 
-		require.Nil(t, read.RaidStatus)
-		require.Nil(t, read.ServerPowerStatus)
-		require.Empty(t, read.OsImages)
-
-		data = read
+		portChannel = read
 	})
 
-	t.Run("read with additional fields", func(t *testing.T) {
+	t.Run("read return NotFoundError when port-channel is not found", func(t *testing.T) {
+		id := 999999
 		read, err := svc.Read(&ReadRequest{
-			Id: serverId,
-			IncludeFields: &IncludeFields{
-				CachedRaidStatus:    true,
-				RefreshedRaidStatus: true,
-				PowerStatus:         true,
-				OSImages:            true,
-			},
-		})
-		require.NoError(t, err)
-		require.NotNil(t, read)
-
-		require.NotNil(t, read.RaidStatus)
-		require.NotNil(t, read.ServerPowerStatus)
-		require.NotEmpty(t, read.OsImages)
-		dataWithAdditionalFields = read
-	})
-
-	t.Run("read return NotFoundError when server is not found", func(t *testing.T) {
-		id := "not-exists-server-id"
-		read, err := svc.Read(&ReadRequest{
-			Id: id,
+			Id:       id,
+			ServerId: serverId,
 		})
 		require.Nil(t, read)
 		require.Error(t, err)
 		require.True(t, v1.IsError404(err))
 	})
 
-	t.Run("list without additional fields", func(t *testing.T) {
-		found, err := svc.Find(&FindRequest{})
-		require.NoError(t, err)
-		require.Len(t, found, 1)
-
-		require.Equal(t, data, found[0])
-
-		require.Nil(t, found[0].RaidStatus)
-		require.Nil(t, found[0].ServerPowerStatus)
-		require.Empty(t, found[0].OsImages)
-	})
-
-	t.Run("list with additional fields", func(t *testing.T) {
-		found, err := svc.Find(&FindRequest{
-			IncludeFields: &IncludeFields{
-				CachedRaidStatus:    true,
-				RefreshedRaidStatus: true,
-				PowerStatus:         true,
-				OSImages:            true,
-			},
+	t.Run("configure", func(t *testing.T) {
+		updated, err := svc.Configure(&ConfigureRequest{
+			Id:          portChannelId,
+			ServerId:    serverId,
+			BondingType: "lacp",
 		})
+
 		require.NoError(t, err)
-		require.Len(t, found, 1)
-
-		require.Equal(t, dataWithAdditionalFields, found[0])
-
-		require.NotNil(t, found[0].RaidStatus)
-		require.NotNil(t, found[0].ServerPowerStatus)
-		require.NotEmpty(t, found[0].OsImages)
+		require.NotEqualValues(t, portChannel.Ports, updated.Ports)
+		require.Equal(t, v1.BondingType("lacp"), updated.BondingType)
 	})
 }
 
@@ -142,7 +102,7 @@ func initFakeServer() *httptest.Server {
 								BondingType:   v1.BondingTypeLacp,
 								LinkSpeedType: v1.PortChannelLinkSpeedTypeN1gbe,
 								Locked:        false,
-								PortChannelId: 1001,
+								PortChannelId: portChannelId,
 								Ports:         []int{2001},
 							},
 						},
