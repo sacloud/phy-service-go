@@ -9,17 +9,34 @@
 
 ## 概要
 
-さくらの専用サーバPHYのAPIをラップし、CRUD+L操作を統一的な手順で行えるインターフェースを提供します。  
+さくらの専用サーバPHYのAPIをラップし、CRUD+L+Action操作を統一的な手順で行えるインターフェースを提供します。  
 
 インターフェースの例:
 ```go
-// TODO 追記
+// サーバ操作の例
+func (s *Service) Find(req *FindRequest) ([]*Server, error)
+func (s *Service) FindWithContext(ctx context.Context, req *FindRequest) ([]*Server, error)
+
+func (s *Service) Install(req *InstallRequest) error
+func (s *Service) InstallWithContext(ctx context.Context, req *InstallRequest) error
+
+func (s *Service) Power(req *PowerRequest) error
+func (s *Service) PowerWithContext(ctx context.Context, req *PowerRequest) error
+
+func (s *Service) Read(req *ReadRequest) (*Server, error)
+func (s *Service) ReadWithContext(ctx context.Context, req *ReadRequest) (*Server, error)
 ```
 
 以下のリソースに対応しています。
 
 ```console
-TODO 追記
+.
+├── dedicated-subnet
+├── private-network
+├── server
+│   ├── port
+│   └── port-channel
+└── service
 ```
 
 ## License
