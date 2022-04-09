@@ -40,8 +40,8 @@ func (s *Service) FindWithContext(ctx context.Context, req *FindRequest) ([]*v1.
 	}
 
 	var results []*v1.DedicatedSubnet
-	for _, ds := range found.DedicatedSubnets {
-		results = append(results, &ds)
+	for i := range found.DedicatedSubnets {
+		results = append(results, &found.DedicatedSubnets[i])
 	}
 	return results, nil
 }

@@ -39,8 +39,8 @@ func (s *Service) FindWithContext(ctx context.Context, req *FindRequest) ([]*Ser
 	}
 
 	var results []*Server
-	for _, server := range found.Servers {
-		sv := &Server{Server: server}
+	for i := range found.Servers {
+		sv := &Server{Server: found.Servers[i]}
 		if err := s.fetchAdditionalInfo(ctx, sv, req.IncludeFields); err != nil {
 			return nil, err
 		}

@@ -40,8 +40,8 @@ func (s *Service) FindWithContext(ctx context.Context, req *FindRequest) ([]*v1.
 	}
 
 	var results []*v1.Service
-	for _, s := range found.Services {
-		results = append(results, &s)
+	for i := range found.Services {
+		results = append(results, &found.Services[i])
 	}
 	return results, nil
 }
