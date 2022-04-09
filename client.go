@@ -24,7 +24,7 @@ import (
 
 // UserAgent APIリクエスト時のユーザーエージェント
 var UserAgent = fmt.Sprintf(
-	"phy-service-go/%s (%s/%s; +https://github.com/sacloud/phy-service-go) %s",
+	"phy-service-go/v%s (%s/%s; +https://github.com/sacloud/phy-service-go) %s",
 	Version,
 	runtime.GOOS,
 	runtime.GOARCH,
