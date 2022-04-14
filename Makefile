@@ -82,3 +82,7 @@ set-license:
 .PHONY: go-licenses-check
 go-licenses-check:
 	go-licenses check .
+
+.PHYNY: services-yaml
+services-yaml:
+	go run tools/print-service-meta/main.go

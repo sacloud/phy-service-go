@@ -20,7 +20,6 @@ import (
 
 	client "github.com/sacloud/api-client-go"
 	"github.com/sacloud/phy-api-go"
-	service "github.com/sacloud/phy-service-go"
 	"github.com/stretchr/testify/require"
 )
 
@@ -29,7 +28,7 @@ func TestService_Power(t *testing.T) {
 	apiClient := &phy.Client{
 		APIRootURL: fakeServer.URL,
 		Options: &client.Options{
-			UserAgent: service.UserAgent,
+			UserAgent: "phy-service-go/test",
 		},
 	}
 	svc := New(apiClient)

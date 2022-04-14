@@ -19,6 +19,7 @@ import (
 
 	"github.com/sacloud/phy-api-go"
 	v1 "github.com/sacloud/phy-api-go/apis/v1"
+	"github.com/sacloud/services/helper"
 )
 
 func (s *Service) Install(req *InstallRequest) error {
@@ -26,7 +27,7 @@ func (s *Service) Install(req *InstallRequest) error {
 }
 
 func (s *Service) InstallWithContext(ctx context.Context, req *InstallRequest) error {
-	if err := req.Validate(); err != nil {
+	if err := helper.ValidateStruct(s, req); err != nil {
 		return err
 	}
 	client := phy.NewServerOp(s.client)

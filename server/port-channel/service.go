@@ -14,11 +14,45 @@
 
 package portchannel
 
-import "github.com/sacloud/phy-api-go"
+import (
+	"github.com/sacloud/phy-api-go"
+	"github.com/sacloud/phy-service-go/server"
+	"github.com/sacloud/services"
+	"github.com/sacloud/services/meta"
+)
+
+var _ services.Service = (*Service)(nil)
 
 // Service provides a high-level API of for Service
 type Service struct {
 	client *phy.Client
+}
+
+func (s *Service) Info() *services.Info {
+	return &services.Info{
+		Name:       "port-channel",
+		ParentKeys: []string{"ServerId"},
+	}
+}
+
+func (s *Service) Operations() []services.SupportedOperation {
+	return []services.SupportedOperation{
+		{Name: "Read", OperationType: services.OperationsRead},
+		{Name: "Configure", OperationType: services.OperationsUpdate},
+	}
+}
+
+func (s *Service) Config() *services.Config {
+	config := &services.Config{
+		OptionDefs: []*meta.Option{
+			{
+				Key:    "bonding_type",
+				Values: []string{"lacp", "static", "single"},
+			},
+		},
+	}
+	config.OptionDefs = append(config.OptionDefs, server.NetworkSettingOptions...)
+	return config
 }
 
 // New returns new service instance of Service

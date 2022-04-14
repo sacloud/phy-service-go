@@ -24,7 +24,6 @@ import (
 	v1 "github.com/sacloud/phy-api-go/apis/v1"
 	"github.com/sacloud/phy-api-go/fake"
 	"github.com/sacloud/phy-api-go/fake/server"
-	service "github.com/sacloud/phy-service-go"
 	"github.com/stretchr/testify/require"
 )
 
@@ -35,7 +34,7 @@ func TestServer_CRUD_plus_L(t *testing.T) {
 	apiClient := &phy.Client{
 		APIRootURL: fakeServer.URL,
 		Options: &client.Options{
-			UserAgent: service.UserAgent,
+			UserAgent: "phy-service-go/test",
 		},
 	}
 	svc := New(apiClient)
@@ -59,7 +58,7 @@ func TestServer_CRUD_plus_L(t *testing.T) {
 	t.Run("read with additional fields", func(t *testing.T) {
 		read, err := svc.Read(&ReadRequest{
 			Id: serverId,
-			IncludeFields: &IncludeFields{
+			IncludeFields: IncludeFields{
 				CachedRaidStatus:    true,
 				RefreshedRaidStatus: true,
 				PowerStatus:         true,
@@ -99,7 +98,7 @@ func TestServer_CRUD_plus_L(t *testing.T) {
 
 	t.Run("list with additional fields", func(t *testing.T) {
 		found, err := svc.Find(&FindRequest{
-			IncludeFields: &IncludeFields{
+			IncludeFields: IncludeFields{
 				CachedRaidStatus:    true,
 				RefreshedRaidStatus: true,
 				PowerStatus:         true,

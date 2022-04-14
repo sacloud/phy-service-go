@@ -15,25 +15,24 @@
 package service
 
 import (
-	"context"
-
 	"github.com/sacloud/phy-api-go"
-	v1 "github.com/sacloud/phy-api-go/apis/v1"
-	"github.com/sacloud/services/helper"
+	dedicatedsubnet "github.com/sacloud/phy-service-go/dedicated-subnet"
+	privatenetwork "github.com/sacloud/phy-service-go/private-network"
+	"github.com/sacloud/phy-service-go/server"
+	"github.com/sacloud/phy-service-go/server/port"
+	portchannel "github.com/sacloud/phy-service-go/server/port-channel"
+	"github.com/sacloud/phy-service-go/service"
+	"github.com/sacloud/services"
 )
 
-func (s *Service) Update(req *UpdateRequest) (*v1.Service, error) {
-	return s.UpdateWithContext(context.Background(), req)
-}
-
-func (s *Service) UpdateWithContext(ctx context.Context, req *UpdateRequest) (*v1.Service, error) {
-	if err := helper.ValidateStruct(s, req); err != nil {
-		return nil, err
+// Services サービス一覧を返す
+func Services(client *phy.Client) []services.Service {
+	return []services.Service{
+		service.New(client),
+		dedicatedsubnet.New(client),
+		privatenetwork.New(client),
+		server.New(client),
+		port.New(client),
+		portchannel.New(client),
 	}
-	client := phy.NewServiceOp(s.client)
-	current, err := client.Read(ctx, v1.ServiceId(req.Id))
-	if err != nil {
-		return nil, err
-	}
-	return client.Update(ctx, v1.ServiceId(req.Id), req.ToRequestParameter(current))
 }

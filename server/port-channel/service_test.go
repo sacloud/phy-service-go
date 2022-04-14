@@ -24,7 +24,6 @@ import (
 	v1 "github.com/sacloud/phy-api-go/apis/v1"
 	"github.com/sacloud/phy-api-go/fake"
 	"github.com/sacloud/phy-api-go/fake/server"
-	service "github.com/sacloud/phy-service-go"
 	serverService "github.com/sacloud/phy-service-go/server"
 	"github.com/stretchr/testify/require"
 )
@@ -37,7 +36,7 @@ func TestServerPortChannel_CRUD_plus_L(t *testing.T) {
 	apiClient := &phy.Client{
 		APIRootURL: fakeServer.URL,
 		Options: &client.Options{
-			UserAgent: service.UserAgent,
+			UserAgent: "phy-service-go/test",
 		},
 	}
 	svc := New(apiClient)

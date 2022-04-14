@@ -14,16 +14,8 @@
 
 package dedicatedsubnet
 
-import (
-	"github.com/sacloud/packages-go/validate"
-)
-
 type ReadRequest struct {
 	Id string `service:"-" validate:"required"`
 	// IPv6有効状態の最新状態を取得する(デフォルト:true)
 	Refresh *bool
-}
-
-func (req *ReadRequest) Validate() error {
-	return validate.New().Struct(req)
 }

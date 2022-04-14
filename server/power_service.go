@@ -21,6 +21,7 @@ import (
 	"github.com/sacloud/packages-go/wait"
 	"github.com/sacloud/phy-api-go"
 	v1 "github.com/sacloud/phy-api-go/apis/v1"
+	"github.com/sacloud/services/helper"
 )
 
 func (s *Service) Power(req *PowerRequest) error {
@@ -28,7 +29,7 @@ func (s *Service) Power(req *PowerRequest) error {
 }
 
 func (s *Service) PowerWithContext(ctx context.Context, req *PowerRequest) error {
-	if err := req.Validate(); err != nil {
+	if err := helper.ValidateStruct(s, req); err != nil {
 		return err
 	}
 	client := phy.NewServerOp(s.client)

@@ -12,29 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package service
+package main
 
 import (
-	"fmt"
-	"runtime"
-
-	client "github.com/sacloud/api-client-go"
-	"github.com/sacloud/phy-api-go"
+	service "github.com/sacloud/phy-service-go"
+	"github.com/sacloud/services/helper"
 )
 
-// UserAgent APIリクエスト時のユーザーエージェント
-var UserAgent = fmt.Sprintf(
-	"phy-service-go/v%s (%s/%s; +https://github.com/sacloud/phy-service-go) %s",
-	Version,
-	runtime.GOOS,
-	runtime.GOARCH,
-	phy.UserAgent,
-)
-
-func NewClient() *phy.Client {
-	return &phy.Client{
-		Options: &client.Options{
-			UserAgent: UserAgent,
-		},
+func main() {
+	for _, s := range service.Services(nil) {
+		helper.PrintServiceMeta(s)
 	}
 }

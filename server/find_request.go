@@ -15,14 +15,13 @@
 package server
 
 import (
-	"github.com/sacloud/packages-go/validate"
 	v1 "github.com/sacloud/phy-api-go/apis/v1"
 )
 
 type FindRequest struct {
 	// 電源状態
 	// キャッシュされた電源状態で絞りこむ
-	PowerStatus string `validate:"omitempty,oneof=on off"`
+	PowerStatus string `validate:"omitempty,power_status" meta:",options=power_status"`
 
 	// インターネット接続状態の絞り込み
 	//
@@ -62,14 +61,10 @@ type FindRequest struct {
 	//
 	// * `activated` - 利用開始日順
 	// * `nickname` - 名称順
-	Ordering string `validate:"omitempty,oneof=activated -activated nickname -nickname power_status_stored -power_status_stored"`
+	Ordering string `validate:"omitempty,ordering" meta:",options=ordering"`
 
 	// 付加的情報の取得範囲
-	IncludeFields *IncludeFields
-}
-
-func (req *FindRequest) Validate() error {
-	return validate.New().Struct(req)
+	IncludeFields IncludeFields `meta:"include"`
 }
 
 func (req *FindRequest) ToRequestParameter() *v1.ListServersParams {

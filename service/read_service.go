@@ -19,6 +19,7 @@ import (
 
 	"github.com/sacloud/phy-api-go"
 	v1 "github.com/sacloud/phy-api-go/apis/v1"
+	"github.com/sacloud/services/helper"
 )
 
 func (s *Service) Read(req *ReadRequest) (*v1.Service, error) {
@@ -26,7 +27,7 @@ func (s *Service) Read(req *ReadRequest) (*v1.Service, error) {
 }
 
 func (s *Service) ReadWithContext(ctx context.Context, req *ReadRequest) (*v1.Service, error) {
-	if err := req.Validate(); err != nil {
+	if err := helper.ValidateStruct(s, req); err != nil {
 		return nil, err
 	}
 	client := phy.NewServiceOp(s.client)

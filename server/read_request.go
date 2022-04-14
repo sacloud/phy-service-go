@@ -14,17 +14,9 @@
 
 package server
 
-import (
-	"github.com/sacloud/packages-go/validate"
-)
-
 type ReadRequest struct {
 	Id string `service:"-" validate:"required"`
 
 	// 付加的情報の取得範囲
-	IncludeFields *IncludeFields
-}
-
-func (req *ReadRequest) Validate() error {
-	return validate.New().Struct(req)
+	IncludeFields IncludeFields
 }

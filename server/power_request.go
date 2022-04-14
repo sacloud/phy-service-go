@@ -16,15 +16,13 @@ package server
 
 import (
 	"time"
-
-	"github.com/sacloud/packages-go/validate"
 )
 
 type PowerRequest struct {
 	Id string `service:"-" validate:"required"`
 
 	// 電源操作内容
-	Operation string `validate:"required,oneof=on soft reset off"`
+	Operation string `validate:"required,power_operation" meta:",options=power_operation"`
 
 	// 電源操作後に希望の状態になるまで待つか
 	NoWait bool
@@ -34,8 +32,4 @@ type PowerRequest struct {
 
 	// 待ち処理の処理間隔
 	Interval time.Duration `validate:"omitempty,min=0"`
-}
-
-func (req *PowerRequest) Validate() error {
-	return validate.New().Struct(req)
 }

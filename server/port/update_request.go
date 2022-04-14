@@ -15,7 +15,6 @@
 package port
 
 import (
-	"github.com/sacloud/packages-go/validate"
 	"github.com/sacloud/phy-service-go/server"
 )
 
@@ -29,8 +28,4 @@ type UpdateRequest struct {
 	Enabled *bool `validate:"omitempty"`
 	// ネットワーク接続設定
 	Network *server.NetworkSetting `validate:"omitempty"`
-}
-
-func (req *UpdateRequest) Validate() error {
-	return validate.New().Struct(req)
 }

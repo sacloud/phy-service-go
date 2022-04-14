@@ -19,6 +19,7 @@ import (
 
 	"github.com/sacloud/phy-api-go"
 	v1 "github.com/sacloud/phy-api-go/apis/v1"
+	"github.com/sacloud/services/helper"
 )
 
 func (s *Service) TrafficGraph(req *TrafficGraphRequest) (*v1.TrafficGraph, error) {
@@ -26,7 +27,7 @@ func (s *Service) TrafficGraph(req *TrafficGraphRequest) (*v1.TrafficGraph, erro
 }
 
 func (s *Service) TrafficGraphWithContext(ctx context.Context, req *TrafficGraphRequest) (*v1.TrafficGraph, error) {
-	if err := req.Validate(); err != nil {
+	if err := helper.ValidateStruct(s, req); err != nil {
 		return nil, err
 	}
 	client := phy.NewServerOp(s.client)
