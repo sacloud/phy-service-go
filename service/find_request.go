@@ -15,7 +15,6 @@
 package service
 
 import (
-	"github.com/sacloud/packages-go/validate"
 	v1 "github.com/sacloud/phy-api-go/apis/v1"
 )
 
@@ -27,7 +26,7 @@ type FindRequest struct {
 	// * private_network
 	// * firewall
 	// * load_balancer
-	ProductCategory string `validate:"omitempty,oneof=server dedicated_subnet private_network firewall load_balancer"`
+	ProductCategory string `validate:"omitempty,product_category" meta:",options=product_category"`
 
 	// タグ検索
 	// このクエリーパラメーターを複数指定した場合は **すべてのタグを設定済み(AND)** のものにマッチ
@@ -53,11 +52,7 @@ type FindRequest struct {
 	//
 	// * `activated` - 利用開始日順
 	// * `nickname` - 名称順
-	Ordering string `validate:"omitempty,oneof=activated -activated nickname -nickname"`
-}
-
-func (req *FindRequest) Validate() error {
-	return validate.New().Struct(req)
+	Ordering string `validate:"omitempty,ordering" meta:",options=ordering"`
 }
 
 func (req *FindRequest) ToRequestParameter() *v1.ListServicesParams {

@@ -14,14 +14,6 @@
 
 package privatenetwork
 
-import (
-	"github.com/sacloud/packages-go/validate"
-)
-
 type ReadRequest struct {
 	Id string `service:"-" validate:"required"`
-}
-
-func (req *ReadRequest) Validate() error {
-	return validate.New().Struct(req)
 }

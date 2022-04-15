@@ -14,15 +14,7 @@
 
 package portchannel
 
-import (
-	"github.com/sacloud/packages-go/validate"
-)
-
 type ReadRequest struct {
 	Id       int    `service:"-" validate:"required"`
 	ServerId string `service:"-" validate:"required"`
-}
-
-func (req *ReadRequest) Validate() error {
-	return validate.New().Struct(req)
 }

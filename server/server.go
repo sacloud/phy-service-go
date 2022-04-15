@@ -42,11 +42,7 @@ type IncludeFields struct {
 	OSImages bool
 }
 
-func (s *Service) fetchAdditionalInfo(ctx context.Context, server *Server, fields *IncludeFields) error {
-	if fields == nil {
-		return nil
-	}
-
+func (s *Service) fetchAdditionalInfo(ctx context.Context, server *Server, fields IncludeFields) error {
 	client := phy.NewServerOp(s.client)
 	if fields.CachedRaidStatus || fields.RefreshedRaidStatus {
 		status, err := client.ReadRAIDStatus(ctx, v1.ServerId(server.ServerId), fields.RefreshedRaidStatus)

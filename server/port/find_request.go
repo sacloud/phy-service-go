@@ -14,14 +14,6 @@
 
 package port
 
-import (
-	"github.com/sacloud/packages-go/validate"
-)
-
 type FindRequest struct {
 	ServerId string `service:"-" validate:"required"`
-}
-
-func (req *FindRequest) Validate() error {
-	return validate.New().Struct(req)
 }

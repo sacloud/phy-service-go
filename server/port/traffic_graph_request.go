@@ -17,7 +17,6 @@ package port
 import (
 	"time"
 
-	"github.com/sacloud/packages-go/validate"
 	v1 "github.com/sacloud/phy-api-go/apis/v1"
 )
 
@@ -30,11 +29,7 @@ type TrafficGraphRequest struct {
 	// 取得範囲終点(未指定時は現在時刻)
 	Until time.Time `validate:"omitempty"`
 	// データポイント間隔(秒)
-	Step int `validate:"omitempty,oneof=300 600 3600 21600"`
-}
-
-func (req *TrafficGraphRequest) Validate() error {
-	return validate.New().Struct(req)
+	Step int `validate:"omitempty,step" meta:",options=step"`
 }
 
 func (req *TrafficGraphRequest) ToRequestParameter() v1.ReadServerTrafficByPortParams {

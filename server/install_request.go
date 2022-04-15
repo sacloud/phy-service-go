@@ -15,7 +15,6 @@
 package server
 
 import (
-	"github.com/sacloud/packages-go/validate"
 	v1 "github.com/sacloud/phy-api-go/apis/v1"
 )
 
@@ -36,10 +35,6 @@ type InstallRequest struct {
 	//
 	// リモートコンソールを利用し手動パーティション指定を行うか(OSが対応している場合のみ)
 	ManualPartition bool
-}
-
-func (req *InstallRequest) Validate() error {
-	return validate.New().Struct(req)
 }
 
 func (req *InstallRequest) ToRequestParameter() v1.OsInstallParameter {

@@ -6,3 +6,5 @@ bin/
 dist/
 vendor/
 work/
+
+tools/print-service-meta/*.yaml

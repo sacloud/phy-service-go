@@ -15,7 +15,6 @@
 package service
 
 import (
-	"github.com/sacloud/packages-go/validate"
 	v1 "github.com/sacloud/phy-api-go/apis/v1"
 )
 
@@ -27,10 +26,6 @@ type UpdateRequest struct {
 
 	// 名称：サーバーやネットワークなどの表示名
 	Nickname *string `json:"nickname" validate:"omitempty"`
-}
-
-func (req *UpdateRequest) Validate() error {
-	return validate.New().Struct(req)
 }
 
 func (req *UpdateRequest) ToRequestParameter(current *v1.Service) v1.UpdateServiceParameter {

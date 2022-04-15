@@ -20,6 +20,7 @@ import (
 
 	"github.com/sacloud/phy-api-go"
 	v1 "github.com/sacloud/phy-api-go/apis/v1"
+	"github.com/sacloud/services/helper"
 )
 
 // Configure ポートチャネル ボンディング設定
@@ -33,7 +34,7 @@ func (s *Service) Configure(req *ConfigureRequest) (*ConfiguredPortChannel, erro
 //
 // 既存の設定が存在する場合に実行すると上書き動作(初期化)となる
 func (s *Service) ConfigureWithContext(ctx context.Context, req *ConfigureRequest) (*ConfiguredPortChannel, error) {
-	if err := req.Validate(); err != nil {
+	if err := helper.ValidateStruct(s, req); err != nil {
 		return nil, err
 	}
 	client := phy.NewServerOp(s.client)

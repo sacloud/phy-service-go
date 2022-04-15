@@ -14,11 +14,41 @@
 
 package privatenetwork
 
-import "github.com/sacloud/phy-api-go"
+import (
+	"github.com/sacloud/phy-api-go"
+	"github.com/sacloud/services"
+	"github.com/sacloud/services/meta"
+)
+
+var _ services.Service = (*Service)(nil)
 
 // Service provides a high-level API of for Service
 type Service struct {
 	client *phy.Client
+}
+
+func (s *Service) Info() *services.Info {
+	return &services.Info{
+		Name: "private-network",
+	}
+}
+
+func (s *Service) Operations() []services.SupportedOperation {
+	return []services.SupportedOperation{
+		{Name: "Find", OperationType: services.OperationsList},
+		{Name: "Read", OperationType: services.OperationsRead},
+	}
+}
+
+func (s *Service) Config() *services.Config {
+	return &services.Config{
+		OptionDefs: []*meta.Option{
+			{
+				Key:    "ordering",
+				Values: []string{"activated", "-activated", "nickname", "-nickname"},
+			},
+		},
+	}
 }
 
 // New returns new service instance of Service

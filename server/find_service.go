@@ -18,6 +18,7 @@ import (
 	"context"
 
 	"github.com/sacloud/phy-api-go"
+	"github.com/sacloud/services/helper"
 )
 
 func (s *Service) Find(req *FindRequest) ([]*Server, error) {
@@ -28,7 +29,7 @@ func (s *Service) FindWithContext(ctx context.Context, req *FindRequest) ([]*Ser
 	if req == nil {
 		req = &FindRequest{}
 	}
-	if err := req.Validate(); err != nil {
+	if err := helper.ValidateStruct(s, req); err != nil {
 		return nil, err
 	}
 

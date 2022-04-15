@@ -14,20 +14,34 @@
 
 package server
 
-import v1 "github.com/sacloud/phy-api-go/apis/v1"
+import (
+	v1 "github.com/sacloud/phy-api-go/apis/v1"
+	"github.com/sacloud/services/meta"
+)
+
+var NetworkSettingOptions = []*meta.Option{
+	{
+		Key:    "network_mode",
+		Values: []string{"access", "trunk"},
+	},
+	{
+		Key:    "internet_type",
+		Values: []string{"", "common_subnet", "dedicated_subnet"},
+	},
+}
 
 type NetworkSetting struct {
 	// ポートモード
 	//
 	// * access - アクセスポート
 	// * trunk - トランクポート
-	Mode string `validate:"required,oneof=access trunk"`
+	Mode string `validate:"required,network_mode" meta:",options=network_mode"`
 
 	// インターネット接続タイプ
 	// * 空 - インターネット接続なし
 	// * common_subnet - 共用グローバルネットワーク利用
 	// * dedicated_subnet - 専用グローバルネットワーク利用
-	InternetType string `validate:"omitempty,oneof=common_subnet dedicated_subnet"`
+	InternetType string `validate:"omitempty,internet_type" meta:",options=internet_type"`
 
 	// 専用グローバルネットワークのサービスコード
 	//
