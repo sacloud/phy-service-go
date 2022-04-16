@@ -35,10 +35,10 @@ func (s *Service) Info() *services.Info {
 
 func (s *Service) Operations() []services.SupportedOperation {
 	return []services.SupportedOperation{
-		{Name: "Find", OperationType: services.OperationsList},
-		{Name: "Install", OperationType: services.OperationsAction},
-		{Name: "Power", OperationType: services.OperationsAction},
-		{Name: "Read", OperationType: services.OperationsRead},
+		{Name: "find", OperationType: services.OperationsList},
+		{Name: "install", OperationType: services.OperationsAction},
+		{Name: "power", OperationType: services.OperationsAction},
+		{Name: "read", OperationType: services.OperationsRead},
 	}
 }
 

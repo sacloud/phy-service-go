@@ -68,7 +68,7 @@ func TestAccServer(t *testing.T) {
 	t.Run("read server", func(t *testing.T) {
 		read, err := serverService.Read(&server.ReadRequest{
 			Id: serverId,
-			IncludeFields: &server.IncludeFields{
+			IncludeFields: server.IncludeFields{
 				CachedRaidStatus:    false,
 				RefreshedRaidStatus: false,
 				PowerStatus:         true,
@@ -91,7 +91,7 @@ func TestAccServer(t *testing.T) {
 
 		read, err := serverService.Read(&server.ReadRequest{
 			Id: serverId,
-			IncludeFields: &server.IncludeFields{
+			IncludeFields: server.IncludeFields{
 				CachedRaidStatus: true,
 				//RefreshedRaidStatus: true,
 			},
@@ -208,7 +208,7 @@ func TestAccPrivateNetwork(t *testing.T) {
 func testClient() *phy.Client {
 	return &phy.Client{
 		Options: &client.Options{
-			UserAgent: "acceptance-test-" + UserAgent,
+			UserAgent: "phy-service-go/test",
 		},
 	}
 }

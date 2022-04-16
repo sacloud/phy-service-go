@@ -35,8 +35,8 @@ func (s *Service) Info() *services.Info {
 
 func (s *Service) Operations() []services.SupportedOperation {
 	return []services.SupportedOperation{
-		{Name: "Find", OperationType: services.OperationsList},
-		{Name: "Read", OperationType: services.OperationsRead},
+		{Name: "find", OperationType: services.OperationsList},
+		{Name: "read", OperationType: services.OperationsRead},
 	}
 }
 

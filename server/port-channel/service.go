@@ -30,15 +30,15 @@ type Service struct {
 
 func (s *Service) Info() *services.Info {
 	return &services.Info{
-		Name:       "port-channel",
-		ParentKeys: []string{"ServerId"},
+		Name:           "port-channel",
+		ParentServices: []string{"server"},
 	}
 }
 
 func (s *Service) Operations() []services.SupportedOperation {
 	return []services.SupportedOperation{
-		{Name: "Read", OperationType: services.OperationsRead},
-		{Name: "Configure", OperationType: services.OperationsUpdate},
+		{Name: "read", OperationType: services.OperationsRead},
+		{Name: "configure", OperationType: services.OperationsUpdate},
 	}
 }
 

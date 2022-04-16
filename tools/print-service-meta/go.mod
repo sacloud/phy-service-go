@@ -6,7 +6,7 @@ replace github.com/sacloud/phy-service-go => ../../
 
 require (
 	github.com/sacloud/phy-service-go v0.0.0-00010101000000-000000000000
-	github.com/sacloud/services v0.0.1
+	github.com/sacloud/services v0.0.2-0.20220416093405-551c8f541413
 )
 
 require (
