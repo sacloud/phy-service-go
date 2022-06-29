@@ -45,7 +45,7 @@ type NetworkSetting struct {
 
 	// 専用グローバルネットワークのサービスコード
 	//
-	//InternetTypeが`dedicated_subnet`の場合に必須
+	// InternetTypeが`dedicated_subnet`の場合に必須
 	DedicatedSubnetId string `validate:"required_if=InternetType dedicated_subnet"`
 
 	// 	接続先ローカルネットワークの配列

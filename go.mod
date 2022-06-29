@@ -1,6 +1,6 @@
 module github.com/sacloud/phy-service-go
 
-go 1.17
+go 1.18
 
 require (
 	github.com/sacloud/api-client-go v0.0.3
