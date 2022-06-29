@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/sacloud/api-client-go v0.0.3
-	github.com/sacloud/packages-go v0.0.2
+	github.com/sacloud/packages-go v0.0.3
 	github.com/sacloud/phy-api-go v0.0.5
 	github.com/sacloud/services v0.0.2-0.20220418053845-d6f9a24c8f76
 	github.com/stretchr/testify v1.7.1
