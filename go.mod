@@ -7,7 +7,7 @@ require (
 	github.com/sacloud/packages-go v0.0.3
 	github.com/sacloud/phy-api-go v0.0.5
 	github.com/sacloud/services v0.0.2-0.20220418053845-d6f9a24c8f76
-	github.com/stretchr/testify v1.7.1
+	github.com/stretchr/testify v1.7.5
 )
 
 require (
@@ -40,5 +40,5 @@ require (
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
