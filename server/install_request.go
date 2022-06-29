@@ -21,7 +21,7 @@ import (
 type InstallRequest struct {
 	Id string `service:"-" validate:"required"`
 
-	//インストールするOSイメージ
+	// インストールするOSイメージ
 	OsImageId string `validate:"required"`
 
 	// パスワード
