@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/sacloud/api-client-go v0.2.0
-	github.com/sacloud/packages-go v0.0.3
+	github.com/sacloud/packages-go v0.0.4
 	github.com/sacloud/phy-api-go v0.0.5
 	github.com/sacloud/services v0.0.2-0.20220418053845-d6f9a24c8f76
 	github.com/stretchr/testify v1.8.0
@@ -19,10 +19,10 @@ require (
 	github.com/gin-gonic/gin v1.7.4 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
-	github.com/go-playground/validator/v10 v10.10.1 // indirect
+	github.com/go-playground/validator/v10 v10.11.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/hashicorp/errwrap v1.0.0 // indirect
-	github.com/hashicorp/go-cleanhttp v0.5.1 // indirect
+	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/hashicorp/go-retryablehttp v0.7.1 // indirect
 	github.com/huandu/xstrings v1.3.2 // indirect
