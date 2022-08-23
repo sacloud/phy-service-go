@@ -31,5 +31,5 @@ func (s *Service) TrafficGraphWithContext(ctx context.Context, req *TrafficGraph
 		return nil, err
 	}
 	client := phy.NewServerOp(s.client)
-	return client.ReadTrafficByPort(ctx, v1.ServerId(req.ServerId), v1.PortId(req.Id), req.ToRequestParameter())
+	return client.ReadTrafficByPort(ctx, req.ServerId, req.Id, req.ToRequestParameter())
 }

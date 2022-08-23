@@ -18,7 +18,6 @@ import (
 	"context"
 
 	"github.com/sacloud/phy-api-go"
-	v1 "github.com/sacloud/phy-api-go/apis/v1"
 	"github.com/sacloud/services/helper"
 )
 
@@ -31,5 +30,5 @@ func (s *Service) InstallWithContext(ctx context.Context, req *InstallRequest) e
 		return err
 	}
 	client := phy.NewServerOp(s.client)
-	return client.OSInstall(ctx, v1.ServerId(req.Id), req.ToRequestParameter())
+	return client.OSInstall(ctx, req.Id, req.ToRequestParameter())
 }

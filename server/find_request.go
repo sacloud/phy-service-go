@@ -80,19 +80,19 @@ func (req *FindRequest) ToRequestParameter() *v1.ListServersParams {
 		params.PrivateNetwork = &req.PrivateNetworks
 	}
 	if len(req.Tags) > 0 {
-		tags := v1.TagFilter(req.Tags)
+		tags := req.Tags
 		params.Tag = &tags
 	}
 	if len(req.FreeWords) > 0 {
-		words := v1.FreeWordFilter(req.FreeWords)
+		words := req.FreeWords
 		params.FreeWord = &words
 	}
 	if req.Limit > 0 {
-		limit := v1.Limit(req.Limit)
+		limit := req.Limit
 		params.Limit = &limit
 	}
 	if req.Offset > 0 {
-		offset := v1.Offset(req.Offset)
+		offset := req.Offset
 		params.Offset = &offset
 	}
 	if req.Ordering != "" {

@@ -36,7 +36,7 @@ func (s *Service) UpdateWithContext(ctx context.Context, req *UpdateRequest) (*v
 
 	if req.Nickname != nil {
 		upd, err := client.UpdatePort(ctx,
-			v1.ServerId(req.ServerId), v1.PortId(req.Id),
+			req.ServerId, req.Id,
 			v1.UpdateServerPortParameter{Nickname: *req.Nickname})
 		if err != nil {
 			return nil, err
@@ -46,7 +46,7 @@ func (s *Service) UpdateWithContext(ctx context.Context, req *UpdateRequest) (*v
 
 	if req.Enabled != nil {
 		upd, err := client.EnablePort(ctx,
-			v1.ServerId(req.ServerId), v1.PortId(req.Id),
+			req.ServerId, req.Id,
 			*req.Enabled)
 		if err != nil {
 			return nil, err
@@ -56,7 +56,7 @@ func (s *Service) UpdateWithContext(ctx context.Context, req *UpdateRequest) (*v
 
 	if req.Network != nil {
 		upd, err := client.AssignNetwork(ctx,
-			v1.ServerId(req.ServerId), v1.PortId(req.Id),
+			req.ServerId, req.Id,
 			req.Network.ToRequestParameter())
 		if err != nil {
 			return nil, err

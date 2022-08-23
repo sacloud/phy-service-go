@@ -36,5 +36,5 @@ func (s *Service) ReadWithContext(ctx context.Context, req *ReadRequest) (*v1.De
 	if req.Refresh != nil {
 		refresh = *req.Refresh
 	}
-	return client.Read(ctx, v1.DedicatedSubnetId(req.Id), refresh)
+	return client.Read(ctx, req.Id, refresh)
 }

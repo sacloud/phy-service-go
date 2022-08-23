@@ -35,12 +35,25 @@ type InstallRequest struct {
 	//
 	// リモートコンソールを利用し手動パーティション指定を行うか(OSが対応している場合のみ)
 	ManualPartition bool
+
+	// パスワードでのSSHログインの許可
+	//
+	// SSH公開鍵認証に対応したOSイメージでのみ有効なパラメータです
+	AllowPasswordLogin bool
+
+	// 専用サーバーに登録するSSH公開鍵のリスト
+	//
+	// SSH公開鍵認証に対応したOSイメージでのみ有効なパラメータです
+	// `allow_password_login`が偽の場合は1つ以上の要素が必要です
+	SshPublicKeys []string
 }
 
 func (req *InstallRequest) ToRequestParameter() v1.OsInstallParameter {
 	return v1.OsInstallParameter{
-		ManualPartition: req.ManualPartition,
-		OsImageId:       req.OsImageId,
-		Password:        v1.PasswordInput(req.Password),
+		ManualPartition:    req.ManualPartition,
+		OsImageId:          req.OsImageId,
+		Password:           req.Password,
+		AllowPasswordLogin: req.AllowPasswordLogin,
+		SshPublicKeys:      req.SshPublicKeys,
 	}
 }
