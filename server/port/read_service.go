@@ -31,5 +31,5 @@ func (s *Service) ReadWithContext(ctx context.Context, req *ReadRequest) (*v1.In
 		return nil, err
 	}
 	client := phy.NewServerOp(s.client)
-	return client.ReadPort(ctx, v1.ServerId(req.ServerId), v1.PortId(req.Id))
+	return client.ReadPort(ctx, req.ServerId, req.Id)
 }

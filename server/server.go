@@ -45,21 +45,22 @@ type IncludeFields struct {
 func (s *Service) fetchAdditionalInfo(ctx context.Context, server *Server, fields IncludeFields) error {
 	client := phy.NewServerOp(s.client)
 	if fields.CachedRaidStatus || fields.RefreshedRaidStatus {
-		status, err := client.ReadRAIDStatus(ctx, v1.ServerId(server.ServerId), fields.RefreshedRaidStatus)
+		status, err := client.ReadRAIDStatus(ctx, server.ServerId, fields.RefreshedRaidStatus)
 		if err != nil {
 			return err
 		}
 		server.RaidStatus = status
 	}
 	if fields.PowerStatus {
-		status, err := client.ReadPowerStatus(ctx, v1.ServerId(server.ServerId))
+		status, err := client.ReadPowerStatus(ctx, server.ServerId)
+
 		if err != nil {
 			return err
 		}
 		server.ServerPowerStatus = status
 	}
 	if fields.OSImages {
-		images, err := client.ListOSImages(ctx, v1.ServerId(server.ServerId))
+		images, err := client.ListOSImages(ctx, server.ServerId)
 		if err != nil {
 			return err
 		}

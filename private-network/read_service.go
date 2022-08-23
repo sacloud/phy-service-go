@@ -31,5 +31,5 @@ func (s *Service) ReadWithContext(ctx context.Context, req *ReadRequest) (*v1.Pr
 		return nil, err
 	}
 	client := phy.NewPrivateNetworkOp(s.client)
-	return client.Read(ctx, v1.PrivateNetworkId(req.Id))
+	return client.Read(ctx, req.Id)
 }

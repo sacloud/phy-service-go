@@ -19,7 +19,6 @@ import (
 	"fmt"
 
 	"github.com/sacloud/phy-api-go"
-	v1 "github.com/sacloud/phy-api-go/apis/v1"
 	"github.com/sacloud/services/helper"
 )
 
@@ -39,7 +38,7 @@ func (s *Service) ConfigureWithContext(ctx context.Context, req *ConfigureReques
 	}
 	client := phy.NewServerOp(s.client)
 	portChannel, err := client.ConfigureBonding(ctx,
-		v1.ServerId(req.ServerId), v1.PortChannelId(req.Id),
+		req.ServerId, req.Id,
 		req.ConfigureBondingParameter(),
 	)
 	if err != nil {
@@ -59,7 +58,7 @@ func (s *Service) ConfigureWithContext(ctx context.Context, req *ConfigureReques
 		setting := req.PortSettings[i]
 
 		assigned, err := client.AssignNetwork(ctx,
-			v1.ServerId(req.ServerId), v1.PortId(portId),
+			req.ServerId, portId,
 			setting.Network.ToRequestParameter(),
 		)
 		if err != nil {

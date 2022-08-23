@@ -18,7 +18,6 @@ import (
 	"context"
 
 	"github.com/sacloud/phy-api-go"
-	v1 "github.com/sacloud/phy-api-go/apis/v1"
 	"github.com/sacloud/services/helper"
 )
 
@@ -31,7 +30,7 @@ func (s *Service) ReadWithContext(ctx context.Context, req *ReadRequest) (*Serve
 		return nil, err
 	}
 	client := phy.NewServerOp(s.client)
-	read, err := client.Read(ctx, v1.ServerId(req.Id))
+	read, err := client.Read(ctx, req.Id)
 	if err != nil {
 		return nil, err
 	}

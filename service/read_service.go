@@ -31,5 +31,5 @@ func (s *Service) ReadWithContext(ctx context.Context, req *ReadRequest) (*v1.Se
 		return nil, err
 	}
 	client := phy.NewServiceOp(s.client)
-	return client.Read(ctx, v1.ServiceId(req.Id))
+	return client.Read(ctx, req.Id)
 }

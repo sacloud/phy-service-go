@@ -33,7 +33,7 @@ func (s *Service) PowerWithContext(ctx context.Context, req *PowerRequest) error
 		return err
 	}
 	client := phy.NewServerOp(s.client)
-	if err := client.PowerControl(ctx, v1.ServerId(req.Id), v1.ServerPowerOperations(req.Operation)); err != nil {
+	if err := client.PowerControl(ctx, req.Id, v1.ServerPowerOperations(req.Operation)); err != nil {
 		return err
 	}
 
@@ -56,7 +56,7 @@ func (s *Service) waitAfterPowerControl(ctx context.Context, req *PowerRequest, 
 
 	waiter := wait.PollingWaiter{
 		ReadFunc: func() (interface{}, error) {
-			return client.ReadPowerStatus(ctx, v1.ServerId(req.Id))
+			return client.ReadPowerStatus(ctx, req.Id)
 		},
 		StateCheckFunc: func(target interface{}) (bool, error) {
 			if state, ok := target.(*v1.ServerPowerStatus); ok {

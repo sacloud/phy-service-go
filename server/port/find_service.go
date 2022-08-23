@@ -31,7 +31,7 @@ func (s *Service) FindWithContext(ctx context.Context, req *FindRequest) ([]*v1.
 		return nil, err
 	}
 	client := phy.NewServerOp(s.client)
-	read, err := client.Read(ctx, v1.ServerId(req.ServerId))
+	read, err := client.Read(ctx, req.ServerId)
 	if err != nil {
 		return nil, err
 	}

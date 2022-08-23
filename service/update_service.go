@@ -31,9 +31,9 @@ func (s *Service) UpdateWithContext(ctx context.Context, req *UpdateRequest) (*v
 		return nil, err
 	}
 	client := phy.NewServiceOp(s.client)
-	current, err := client.Read(ctx, v1.ServiceId(req.Id))
+	current, err := client.Read(ctx, req.Id)
 	if err != nil {
 		return nil, err
 	}
-	return client.Update(ctx, v1.ServiceId(req.Id), req.ToRequestParameter(current))
+	return client.Update(ctx, req.Id, req.ToRequestParameter(current))
 }
