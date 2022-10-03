@@ -1,6 +1,6 @@
 module github.com/sacloud/phy-service-go/tools/print-service-meta
 
-go 1.18
+go 1.19
 
 replace github.com/sacloud/phy-service-go => ../../
 
