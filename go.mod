@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/sacloud/api-client-go v0.2.1
-	github.com/sacloud/packages-go v0.0.5
+	github.com/sacloud/packages-go v0.0.6
 	github.com/sacloud/phy-api-go v0.1.0
 	github.com/sacloud/services v0.0.2-0.20220418053845-d6f9a24c8f76
 	github.com/stretchr/testify v1.8.0
@@ -19,7 +19,7 @@ require (
 	github.com/gin-gonic/gin v1.8.1 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
-	github.com/go-playground/validator/v10 v10.11.0 // indirect
+	github.com/go-playground/validator/v10 v10.11.1 // indirect
 	github.com/goccy/go-json v0.9.10 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
