@@ -120,8 +120,8 @@ github.com/sacloud/go-http v0.1.2 h1:a84HkeDHxDD1vIA6HiOT72a3fwwJueZBwuGP6zVtEJU
 github.com/sacloud/go-http v0.1.2/go.mod h1:gvWaT8LFBFnSBFVrznOQXC62uad46bHZQM8w+xoH3eE=
 github.com/sacloud/packages-go v0.0.6 h1:2aFjvqsxhK7+gy+g7LBX0Brfcf4aTYAEszL9B4rUhvY=
 github.com/sacloud/packages-go v0.0.6/go.mod h1:+THah+bxMCWSkaCTgJ0E0pEjxqpxmiASbNjaImkYzMo=
-github.com/sacloud/phy-api-go v0.1.0 h1:PZtkoKV4ccXT1Mf+7u34lbQwQ6HR0Mxj92bK+B1RB5M=
-github.com/sacloud/phy-api-go v0.1.0/go.mod h1:f0TQ4OCqORqoAIhZ48c53+QZDYFH9bPhSiJL7Ibc/vI=
+github.com/sacloud/phy-api-go v0.1.1 h1:R5xZdStM+L/xDEyilM/g7fwYLM94IULur8k/zpfc47U=
+github.com/sacloud/phy-api-go v0.1.1/go.mod h1:uFh7MhtQnvOB9yHz3AHzGGEgVojJXDd/yQ6hcDZhJzw=
 github.com/sacloud/services v0.0.2-0.20220418053845-d6f9a24c8f76 h1:auHqE/Mn2L+rMTCgmryuT8CYZxBNy32ruABotagsdv4=
 github.com/sacloud/services v0.0.2-0.20220418053845-d6f9a24c8f76/go.mod h1:iKmGnTl+oBZzOz44nz5HGsa+xmY1YnIblwijAih6KmQ=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
