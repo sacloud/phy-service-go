@@ -41,6 +41,6 @@ func (s *Service) ReadWithContext(ctx context.Context, req *ReadRequest) (*Serve
 
 ## License
 
-`sacloud/phy-service-go` Copyright (C) 2022 [The sacloud/phy-service-go Authors](AUTHORS).
+`sacloud/phy-service-go` Copyright (C) 2022-2023 [The sacloud/phy-service-go Authors](AUTHORS).
 
 This project is published under [Apache 2.0 License](LICENSE.txt).
