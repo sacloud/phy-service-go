@@ -3,11 +3,11 @@ module github.com/sacloud/phy-service-go
 go 1.20
 
 require (
-	github.com/sacloud/api-client-go v0.2.7
+	github.com/sacloud/api-client-go v0.2.8
 	github.com/sacloud/packages-go v0.0.8
 	github.com/sacloud/phy-api-go v0.1.2
 	github.com/sacloud/services v0.0.2-0.20220418053845-d6f9a24c8f76
-	github.com/stretchr/testify v1.8.2
+	github.com/stretchr/testify v1.8.3
 )
 
 require (
@@ -38,7 +38,7 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.6 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/sacloud/go-http v0.1.5 // indirect
+	github.com/sacloud/go-http v0.1.6 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.9 // indirect
 	go.uber.org/ratelimit v0.2.0 // indirect
