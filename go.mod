@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/sacloud/api-client-go v0.2.10
-	github.com/sacloud/packages-go v0.0.9
+	github.com/sacloud/packages-go v0.0.10
 	github.com/sacloud/phy-api-go v0.1.3
 	github.com/sacloud/services v0.0.2-0.20220418053845-d6f9a24c8f76
 	github.com/stretchr/testify v1.8.4
@@ -33,7 +33,7 @@ require (
 	github.com/gin-gonic/gin v1.9.1 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
-	github.com/go-playground/validator/v10 v10.14.1 // indirect
+	github.com/go-playground/validator/v10 v10.16.0 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/gomarkdown/markdown v0.0.0-20230716120725-531d2d74bc12 // indirect
@@ -82,10 +82,10 @@ require (
 	github.com/yosssi/ace v0.0.5 // indirect
 	go.uber.org/ratelimit v0.3.0 // indirect
 	golang.org/x/arch v0.4.0 // indirect
-	golang.org/x/crypto v0.13.0 // indirect
-	golang.org/x/net v0.15.0 // indirect
-	golang.org/x/sys v0.12.0 // indirect
-	golang.org/x/text v0.13.0 // indirect
+	golang.org/x/crypto v0.15.0 // indirect
+	golang.org/x/net v0.18.0 // indirect
+	golang.org/x/sys v0.14.0 // indirect
+	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/time v0.3.0 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
